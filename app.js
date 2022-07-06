@@ -32,6 +32,7 @@ const CONTENT_TYPE_JSON = 'application/json';
 
 app.use((req, res, next) => {
     // console.log(req);
+    const serverTimestamp = new Date();
     requests += 1;
     console.log(`requests: ${requests}`);
     // next();
@@ -52,7 +53,16 @@ app.use((req, res, next) => {
                 res.send('Error');
             }else{
                 jsonData = req.body['json']
-                console.log(jsonData)
+                // console.log(jsonData)
+                const event = JSON.parse(jsonData);
+                const eventTimestamp = event['data']['timestamp']
+
+                console.log(`Event Timestamp: ${eventTimestamp}`)
+                console.log(`Server Timestamp: ${serverTimestamp}`)
+
+                console.log('---------------------');
+                
+
                 res.send('OK!')
             }
          });
